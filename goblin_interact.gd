@@ -28,6 +28,7 @@ extends Node3D
 @onready var prompt_label: Label3D = get_node_or_null(prompt_label_path)
 
 var _rng := RandomNumberGenerator.new()
+var _dialog_ticket: int = 0
 
 
 func _ready() -> void:
@@ -62,7 +63,8 @@ func _say_phrase() -> void:
 	var phrase := _pick_phrase()
 	phrase_label.text = phrase
 	phrase_label.visible = true
-	_start_hide_timer()
+	_dialog_ticket += 1
+	_start_hide_timer(_dialog_ticket)
 
 
 func _pick_phrase() -> String:
@@ -73,12 +75,14 @@ func _pick_phrase() -> String:
 	return "..."
 
 
-func _start_hide_timer() -> void:
+func _start_hide_timer(ticket: int) -> void:
 	var timer := get_tree().create_timer(display_time)
-	timer.timeout.connect(_on_phrase_timeout, Object.CONNECT_ONE_SHOT)
+	timer.timeout.connect(func(): _on_phrase_timeout(ticket), Object.CONNECT_ONE_SHOT)
 
 
-func _on_phrase_timeout() -> void:
+func _on_phrase_timeout(ticket: int) -> void:
+	if ticket != _dialog_ticket:
+		return
 	if phrase_label:
 		phrase_label.visible = false
 
