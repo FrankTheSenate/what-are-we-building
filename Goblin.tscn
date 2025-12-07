@@ -1,4 +1,6 @@
-[gd_scene load_steps=6 format=3 uid="uid://goblin_placeholder_scene"]
+[gd_scene load_steps=7 format=3 uid="uid://goblin_placeholder_scene"]
+
+[ext_resource type="Script" path="res://goblin_interact.gd" id="1_goblin_script"]
 
 [sub_resource type="CapsuleMesh" id="CapsuleMesh_body"]
 radius = 0.35
@@ -32,13 +34,14 @@ albedo_color = Color(0, 0, 0, 1)
 roughness = 0.1
 
 [node name="Goblin" type="Node3D"]
+script = ExtResource("1_goblin_script")
 
-[node name="Body" type="MeshInstance3D" parent="Goblin"]
+[node name="Body" type="MeshInstance3D" parent="."]
 mesh = SubResource("CapsuleMesh_body")
 material_override = SubResource("Material_skin")
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.15, 0)
 
-[node name="Head" type="MeshInstance3D" parent="Goblin"]
+[node name="Head" type="MeshInstance3D" parent="."]
 mesh = SubResource("SphereMesh_head")
 material_override = SubResource("Material_skin")
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.5, 0)
@@ -53,18 +56,40 @@ mesh = SubResource("SphereMesh_eye")
 material_override = SubResource("Material_eye")
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.14, 0.08, 0.32)
 
-[node name="PupilL" type="MeshInstance3D" parent="EyeL"]
+[node name="PupilL" type="MeshInstance3D" parent="Head/EyeL"]
 mesh = SubResource("SphereMesh_pupil")
 material_override = SubResource("Material_pupil")
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0.06)
 
-[node name="PupilR" type="MeshInstance3D" parent="EyeR"]
+[node name="PupilR" type="MeshInstance3D" parent="Head/EyeR"]
 mesh = SubResource("SphereMesh_pupil")
 material_override = SubResource("Material_pupil")
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0.06)
 
-[node name="Glow" type="OmniLight3D" parent="Goblin"]
+[node name="Glow" type="OmniLight3D" parent="."]
 omni_range = 3.0
 light_color = Color(0.5, 0.9, 1, 1)
 light_energy = 0.4
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.8, 0)
+
+[node name="PhraseLabel" type="Label3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.35, 0)
+text = ""
+billboard = 1
+fixed_size = true
+font_size = 8
+outline_size = 3
+modulate = Color(1, 1, 1, 1)
+outline_modulate = Color(0.1, 0.2, 0.1, 1)
+no_depth_test = true
+
+[node name="PromptLabel" type="Label3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.7, 0)
+text = "[E]"
+billboard = 1
+fixed_size = true
+font_size = 8
+outline_size = 3
+modulate = Color(0.9, 1, 0.9, 1)
+outline_modulate = Color(0.05, 0.15, 0.05, 1)
+no_depth_test = true

@@ -1,8 +1,9 @@
-[gd_scene load_steps=12 format=3 uid="uid://ehqy0kd4rq3g"]
+[gd_scene load_steps=13 format=3 uid="uid://ehqy0kd4rq3g"]
 
 [ext_resource type="PackedScene" uid="uid://cwbpvk0v82yyi" path="res://PlayerChar.tscn" id="1_bexhn"]
 [ext_resource type="Script" uid="uid://cood70af6j3mo" path="res://level_advance_trigger.gd" id="2_trigger"]
 [ext_resource type="PackedScene" uid="uid://orb_follower_scene" path="res://OrbFollower.tscn" id="3_orb"]
+[ext_resource type="PackedScene" path="res://Goblin.tscn" id="4_goblin"]
 
 [sub_resource type="Image" id="Image_t7iv1"]
 data = {
@@ -56,6 +57,10 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 4.587867, 0)
 
 [node name="OrbBuddy" parent="." instance=ExtResource("3_orb")]
 target_path = NodePath("../Node3D")
+
+[node name="GoblinNPC" parent="." instance=ExtResource("4_goblin")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.5, 0.6, 3.0)
+target_path = NodePath("../Node3D/CharacterBody3D")
 
 [node name="AdvanceTrigger" type="Area3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.75, 20)
