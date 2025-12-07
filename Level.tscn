@@ -1,9 +1,11 @@
-[gd_scene load_steps=11 format=3 uid="uid://ehqy0kd4rq3g"]
+[gd_scene load_steps=13 format=3 uid="uid://ehqy0kd4rq3g"]
 
 [ext_resource type="PackedScene" uid="uid://cwbpvk0v82yyi" path="res://PlayerChar.tscn" id="1_bexhn"]
 [ext_resource type="Script" uid="uid://cood70af6j3mo" path="res://level_advance_trigger.gd" id="2_trigger"]
+[ext_resource type="Environment" path="res://raytraced_environment.tres" id="3_ray_env"]
+[ext_resource type="Script" uid="uid://dqb5rnmvsqubp" path="res://moving_light.gd" id="4_moving_light"]
 
-[sub_resource type="Image" id="Image_t7iv1"]
+[sub_resource type="Image" id="Image_wkftn"]
 data = {
 "data": PackedByteArray(200, 200, 200, 255, 165, 84, 65, 255, 165, 84, 65, 255, 165, 84, 65, 255, 200, 200, 200, 255, 165, 84, 65, 255, 165, 84, 65, 255, 165, 84, 65, 255, 200, 200, 200, 255, 165, 84, 65, 255, 165, 84, 65, 255, 165, 84, 65, 255, 200, 200, 200, 255, 165, 84, 65, 255, 165, 84, 65, 255, 165, 84, 65, 255, 200, 200, 200, 255, 165, 84, 65, 255, 165, 84, 65, 255, 165, 84, 65, 255, 200, 200, 200, 255, 165, 84, 65, 255, 165, 84, 65, 255, 165, 84, 65, 255, 200, 200, 200, 255, 200, 200, 200, 255, 200, 200, 200, 255, 200, 200, 200, 255, 200, 200, 200, 255, 200, 200, 200, 255, 200, 200, 200, 255, 200, 200, 200, 255, 200, 200, 200, 255, 165, 84, 65, 255, 165, 84, 65, 255, 165, 84, 65, 255, 200, 200, 200, 255, 165, 84, 65, 255, 165, 84, 65, 255, 165, 84, 65, 255, 200, 200, 200, 255, 165, 84, 65, 255, 165, 84, 65, 255, 165, 84, 65, 255, 200, 200, 200, 255, 165, 84, 65, 255, 165, 84, 65, 255, 165, 84, 65, 255, 200, 200, 200, 255, 165, 84, 65, 255, 165, 84, 65, 255, 165, 84, 65, 255, 200, 200, 200, 255, 165, 84, 65, 255, 165, 84, 65, 255, 165, 84, 65, 255, 200, 200, 200, 255, 200, 200, 200, 255, 200, 200, 200, 255, 200, 200, 200, 255, 200, 200, 200, 255, 200, 200, 200, 255, 200, 200, 200, 255, 200, 200, 200, 255),
 "format": "RGBA8",
@@ -13,7 +15,7 @@ data = {
 }
 
 [sub_resource type="ImageTexture" id="ImageTexture_brick"]
-image = SubResource("Image_t7iv1")
+image = SubResource("Image_wkftn")
 
 [sub_resource type="StandardMaterial3D" id="Material_brick"]
 albedo_texture = SubResource("ImageTexture_brick")
@@ -40,6 +42,11 @@ size = Vector3(2.5, 2.5, 2.5)
 
 [node name="Sun" type="DirectionalLight3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 0.49999997, 0.86602545, 0, -0.86602545, 0.49999997, 0, 0, 0)
+shadow_enabled = true
+script = ExtResource("4_moving_light")
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
+environment = ExtResource("3_ray_env")
 
 [node name="Floor" type="StaticBody3D" parent="."]
 

@@ -1,4 +1,5 @@
 res://playerchar.gd
-res://slime_physics_spawner.gd
-res://slime_fling_body.gd
+res://moving_light.gd
+res://pit_object_rain.gd
 res://Level.tscn
+res://raytraced_environment.tres

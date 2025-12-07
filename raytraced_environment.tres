@@ -1,0 +1,12 @@
+[gd_resource type="Environment" load_steps=3 format=3 uid="uid://dwdgauc5bjt23"]
+
+[sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_raytrace"]
+
+[sub_resource type="Sky" id="Sky_raytrace"]
+sky_material = SubResource("ProceduralSkyMaterial_raytrace")
+
+[resource]
+background_mode = 2
+sky = SubResource("Sky_raytrace")
+sdfgi_enabled = true
+sdfgi_use_occlusion = true

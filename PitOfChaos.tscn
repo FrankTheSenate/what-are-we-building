@@ -1,0 +1,126 @@
+[gd_scene load_steps=15 format=3]
+
+[ext_resource type="PackedScene" path="res://PlayerChar.tscn" id="1_player"]
+[ext_resource type="Script" path="res://level_advance_trigger.gd" id="2_trigger"]
+[ext_resource type="Environment" path="res://raytraced_environment.tres" id="3_ray_env"]
+[ext_resource type="Script" path="res://moving_light.gd" id="4_light"]
+[ext_resource type="Script" path="res://pit_object_rain.gd" id="5_rain"]
+
+[sub_resource type="StandardMaterial3D" id="Material_floor"]
+albedo_color = Color(0.06, 0.08, 0.12, 1)
+roughness = 0.9
+
+[sub_resource type="PlaneMesh" id="PlaneMesh_floor"]
+size = Vector2(140, 140)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_floor"]
+size = Vector3(140, 0.5, 140)
+
+[sub_resource type="StandardMaterial3D" id="Material_wall"]
+albedo_color = Color(0.08, 0.3, 0.25, 1)
+emission_enabled = true
+emission = Color(0.05, 0.7, 0.5, 1)
+
+[sub_resource type="BoxMesh" id="BoxMesh_wall"]
+size = Vector3(140, 30, 4)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_wall"]
+size = Vector3(140, 30, 4)
+
+[sub_resource type="StandardMaterial3D" id="Material_exit"]
+albedo_color = Color(0.2, 0.9, 0.4, 1)
+emission_enabled = true
+emission = Color(0.1, 0.8, 0.3, 1)
+
+[sub_resource type="BoxMesh" id="BoxMesh_exit"]
+size = Vector3(3, 4, 3)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_exit"]
+size = Vector3(3, 3, 3)
+
+[node name="PitOfChaos" type="Node3D"]
+
+[node name="Sun" type="DirectionalLight3D" parent="."]
+transform = Transform3D(0.9659258, 0, -0.25881904, 0.0669873, 0.9659258, 0.25000003, 0.25, -0.25881904, 0.9330127, 0, 0, 0)
+light_energy = 1.6
+shadow_enabled = true
+script = ExtResource("4_light")
+orbit_speed_hz = 0.7
+orbit_pitch_amplitude_degrees = 45.0
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
+environment = ExtResource("3_ray_env")
+
+[node name="Floor" type="StaticBody3D" parent="."]
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Floor"]
+mesh = SubResource("PlaneMesh_floor")
+material_override = SubResource("Material_floor")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Floor"]
+shape = SubResource("BoxShape3D_floor")
+
+[node name="WallNorth" type="StaticBody3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 15, 70)
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="WallNorth"]
+mesh = SubResource("BoxMesh_wall")
+material_override = SubResource("Material_wall")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="WallNorth"]
+shape = SubResource("BoxShape3D_wall")
+
+[node name="WallSouth" type="StaticBody3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 15, -70)
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="WallSouth"]
+mesh = SubResource("BoxMesh_wall")
+material_override = SubResource("Material_wall")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="WallSouth"]
+shape = SubResource("BoxShape3D_wall")
+
+[node name="WallEast" type="StaticBody3D" parent="."]
+transform = Transform3D(2.38419e-07, 0, -1, 0, 1, 0, 1, 0, 2.38419e-07, 70, 15, 0)
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="WallEast"]
+mesh = SubResource("BoxMesh_wall")
+material_override = SubResource("Material_wall")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="WallEast"]
+shape = SubResource("BoxShape3D_wall")
+
+[node name="WallWest" type="StaticBody3D" parent="."]
+transform = Transform3D(2.38419e-07, 0, 1, 0, 1, 0, -1, 0, 2.38419e-07, -70, 15, 0)
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="WallWest"]
+mesh = SubResource("BoxMesh_wall")
+material_override = SubResource("Material_wall")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="WallWest"]
+shape = SubResource("BoxShape3D_wall")
+
+[node name="Player" parent="." instance=ExtResource("1_player")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 35, 0)
+
+[node name="DebrisRain" type="Node3D" parent="."]
+script = ExtResource("5_rain")
+object_count = 1300
+batch_size = 50
+batch_interval = 0.75
+spawn_radius = 55.0
+spawn_height = 45.0
+base_downward_speed = 9.0
+random_speed = 11.0
+
+[node name="ExitTrigger" type="Area3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -50, 3, -50)
+script = ExtResource("2_trigger")
+target_scene_path = "res://Level.tscn"
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="ExitTrigger"]
+shape = SubResource("BoxShape3D_exit")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="ExitTrigger"]
+mesh = SubResource("BoxMesh_exit")
+material_override = SubResource("Material_exit")

@@ -73,6 +73,8 @@ func _ready() -> void:
 		mat.transparency = BaseMaterial3D.TRANSPARENCY_ALPHA
 		mat.roughness = 0.7
 		mesh.material_override = mat
+	mesh.cast_shadow = GeometryInstance3D.SHADOW_CASTING_SETTING_ON
+	mesh.gi_mode = GeometryInstance3D.GI_MODE_DYNAMIC
 	get_tree().current_scene.add_child(trail_container)
 	ragdoll_rng.randomize()
 	original_collision_layer = body.collision_layer
@@ -360,6 +362,8 @@ func _start_ragdoll(hit_velocity: Vector3) -> void:
 		var surf_mat := mesh.mesh.surface_get_material(0)
 		if surf_mat:
 			rag_mesh.material_override = surf_mat
+	rag_mesh.cast_shadow = GeometryInstance3D.SHADOW_CASTING_SETTING_ON
+	rag_mesh.gi_mode = GeometryInstance3D.GI_MODE_DYNAMIC
 	var impact_speed := hit_velocity.length()
 	var dir := hit_velocity.normalized()
 	var intensity: float = impact_speed / max(0.001, jump_velocity)

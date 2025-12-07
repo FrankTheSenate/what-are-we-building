@@ -20,6 +20,8 @@ script = ExtResource("1_fpmoo")
 [node name="MeshInstance3D" type="MeshInstance3D" parent="CharacterBody3D"]
 mesh = SubResource("CapsuleMesh_sii85")
 surface_material_override/0 = SubResource("StandardMaterial3D_fpmoo")
+cast_shadow = 1
+gi_mode = 2
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="CharacterBody3D"]
 shape = SubResource("CapsuleShape3D_1y1dc")

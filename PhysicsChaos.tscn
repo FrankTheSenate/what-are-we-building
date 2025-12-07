@@ -1,9 +1,11 @@
-[gd_scene load_steps=18 format=3]
+[gd_scene load_steps=20 format=3]
 
 [ext_resource type="PackedScene" path="res://PlayerChar.tscn" id="1_player"]
 [ext_resource type="Script" path="res://slime_fling_body.gd" id="2_fling"]
 [ext_resource type="Script" path="res://level_advance_trigger.gd" id="3_trigger"]
 [ext_resource type="Script" path="res://slime_physics_spawner.gd" id="4_spawner"]
+[ext_resource type="Environment" path="res://raytraced_environment.tres" id="5_ray_env"]
+[ext_resource type="Script" path="res://moving_light.gd" id="6_moving_light"]
 
 [sub_resource type="StandardMaterial3D" id="Material_floor"]
 albedo_color = Color(0.05, 0.12, 0.05, 1)
@@ -68,6 +70,11 @@ size = Vector3(3, 3, 3)
 [node name="Sun" type="DirectionalLight3D" parent="."]
 transform = Transform3D(0.8660254, -0.3535534, 0.35355338, 0, 0.70710677, 0.7071068, -0.5, -0.6123724, 0.61237246, 0, 0, 0)
 light_energy = 1.45
+shadow_enabled = true
+script = ExtResource("6_moving_light")
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
+environment = ExtResource("5_ray_env")
 
 [node name="Floor" type="StaticBody3D" parent="."]
 
@@ -101,6 +108,18 @@ target_scene_path = "res://Level.tscn"
 shape = SubResource("BoxShape3D_trigger")
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="TriggerReturn"]
+mesh = SubResource("BoxMesh_trigger")
+material_override = SubResource("Material_trigger")
+
+[node name="PitTrigger" type="Area3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 32, 1.5, 32)
+script = ExtResource("3_trigger")
+target_scene_path = "res://PitOfChaos.tscn"
+
+[node name="CollisionShape3D5" type="CollisionShape3D" parent="PitTrigger"]
+shape = SubResource("BoxShape3D_trigger")
+
+[node name="MeshInstance3D5" type="MeshInstance3D" parent="PitTrigger"]
 mesh = SubResource("BoxMesh_trigger")
 material_override = SubResource("Material_trigger")
 
