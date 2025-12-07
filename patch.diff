@@ -1,0 +1,13 @@
+*** Begin Patch
+*** Update File: Level.tscn
+@@
+-[node name="Level" type="Node3D"]
+-
+-[node name="Floor" type="StaticBody3D" parent="."]
++[node name="Level" type="Node3D"]
++
++[node name="Sun" type="DirectionalLight3D" parent="."]
++rotation_degrees = Vector3(-60, 0, 0)
++
++[node name="Floor" type="StaticBody3D" parent="."]
+*** End Patch

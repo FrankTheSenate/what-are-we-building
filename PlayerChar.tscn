@@ -1,0 +1,28 @@
+[gd_scene load_steps=5 format=3 uid="uid://cwbpvk0v82yyi"]
+
+[ext_resource type="Script" uid="uid://bi8swcguq2jc2" path="res://playerchar.gd" id="1_fpmoo"]
+
+[sub_resource type="CapsuleMesh" id="CapsuleMesh_sii85"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_fpmoo"]
+transparency = 1
+albedo_color = Color(0, 0.78431374, 0, 0.68235296)
+metallic = 1.0
+metallic_specular = 1.0
+
+[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_1y1dc"]
+
+[node name="Node3D" type="Node3D"]
+script = ExtResource("1_fpmoo")
+
+[node name="CharacterBody3D" type="CharacterBody3D" parent="."]
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="CharacterBody3D"]
+mesh = SubResource("CapsuleMesh_sii85")
+surface_material_override/0 = SubResource("StandardMaterial3D_fpmoo")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="CharacterBody3D"]
+shape = SubResource("CapsuleShape3D_1y1dc")
+
+[node name="Camera3D" type="Camera3D" parent="CharacterBody3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.4639413, 4.5639353)

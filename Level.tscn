@@ -1,0 +1,42 @@
+[gd_scene load_steps=7 format=3 uid="uid://ehqy0kd4rq3g"]
+
+[ext_resource type="PackedScene" uid="uid://cwbpvk0v82yyi" path="res://PlayerChar.tscn" id="1_bexhn"]
+
+[sub_resource type="Image" id="Image_bexhn"]
+data = {
+"data": PackedByteArray(200, 200, 200, 255, 165, 84, 65, 255, 165, 84, 65, 255, 165, 84, 65, 255, 200, 200, 200, 255, 165, 84, 65, 255, 165, 84, 65, 255, 165, 84, 65, 255, 200, 200, 200, 255, 165, 84, 65, 255, 165, 84, 65, 255, 165, 84, 65, 255, 200, 200, 200, 255, 165, 84, 65, 255, 165, 84, 65, 255, 165, 84, 65, 255, 200, 200, 200, 255, 165, 84, 65, 255, 165, 84, 65, 255, 165, 84, 65, 255, 200, 200, 200, 255, 165, 84, 65, 255, 165, 84, 65, 255, 165, 84, 65, 255, 200, 200, 200, 255, 200, 200, 200, 255, 200, 200, 200, 255, 200, 200, 200, 255, 200, 200, 200, 255, 200, 200, 200, 255, 200, 200, 200, 255, 200, 200, 200, 255, 200, 200, 200, 255, 165, 84, 65, 255, 165, 84, 65, 255, 165, 84, 65, 255, 200, 200, 200, 255, 165, 84, 65, 255, 165, 84, 65, 255, 165, 84, 65, 255, 200, 200, 200, 255, 165, 84, 65, 255, 165, 84, 65, 255, 165, 84, 65, 255, 200, 200, 200, 255, 165, 84, 65, 255, 165, 84, 65, 255, 165, 84, 65, 255, 200, 200, 200, 255, 165, 84, 65, 255, 165, 84, 65, 255, 165, 84, 65, 255, 200, 200, 200, 255, 165, 84, 65, 255, 165, 84, 65, 255, 165, 84, 65, 255, 200, 200, 200, 255, 200, 200, 200, 255, 200, 200, 200, 255, 200, 200, 200, 255, 200, 200, 200, 255, 200, 200, 200, 255, 200, 200, 200, 255, 200, 200, 200, 255),
+"format": "RGBA8",
+"height": 8,
+"mipmaps": false,
+"width": 8
+}
+
+[sub_resource type="ImageTexture" id="ImageTexture_brick"]
+image = SubResource("Image_bexhn")
+
+[sub_resource type="StandardMaterial3D" id="Material_brick"]
+albedo_texture = SubResource("ImageTexture_brick")
+uv1_scale = Vector3(10, 10, 1)
+
+[sub_resource type="PlaneMesh" id="PlaneMesh_floor"]
+size = Vector2(50, 50)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_floor"]
+size = Vector3(50, 0.2, 50)
+
+[node name="Level" type="Node3D"]
+
+[node name="Sun" type="DirectionalLight3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 0.49999997, 0.86602545, 0, -0.86602545, 0.49999997, 0, 0, 0)
+
+[node name="Floor" type="StaticBody3D" parent="."]
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Floor"]
+material_override = SubResource("Material_brick")
+mesh = SubResource("PlaneMesh_floor")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Floor"]
+shape = SubResource("BoxShape3D_floor")
+
+[node name="Node3D" parent="." instance=ExtResource("1_bexhn")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 4.587867, 0)
