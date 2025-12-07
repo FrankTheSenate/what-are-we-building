@@ -1,5 +1,4 @@
+res://sun_flash.gd
+res://orb_follower.gd
+res://goblin_interact.gd
 res://playerchar.gd
-res://moving_light.gd
-res://pit_object_rain.gd
-res://Level.tscn
-res://raytraced_environment.tres
