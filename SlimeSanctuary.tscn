@@ -1,0 +1,193 @@
+[gd_scene load_steps=22 format=3]
+
+[ext_resource type="PackedScene" path="res://PlayerChar.tscn" id="1_player"]
+[ext_resource type="Script" path="res://slime_bounce_pad.gd" id="2_bounce"]
+[ext_resource type="Script" path="res://slime_launch_jet.gd" id="3_jet"]
+[ext_resource type="Script" path="res://slime_drag_area.gd" id="4_drag"]
+[ext_resource type="Script" path="res://level_advance_trigger.gd" id="5_trigger"]
+[ext_resource type="Script" path="res://slime_suction_vent.gd" id="6_vent"]
+[ext_resource type="Script" path="res://slime_wall_stick.gd" id="7_stick"]
+
+[sub_resource type="StandardMaterial3D" id="Material_floor"]
+albedo_color = Color(0.08, 0.35, 0.08, 1)
+roughness = 0.8
+
+[sub_resource type="PlaneMesh" id="PlaneMesh_floor"]
+size = Vector2(80, 80)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_floor"]
+size = Vector3(80, 0.25, 80)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_pad"]
+size = Vector3(6, 2, 6)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_jet"]
+size = Vector3(4, 2, 4)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_pool"]
+size = Vector3(20, 1, 20)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_exit"]
+size = Vector3(4, 3, 4)
+
+[sub_resource type="CylinderMesh" id="CylinderMesh_vent"]
+top_radius = 2.0
+bottom_radius = 2.5
+height = 2.0
+
+[sub_resource type="StandardMaterial3D" id="Material_vent"]
+albedo_color = Color(0.1, 0.9, 0.1, 1)
+emission_enabled = true
+emission = Color(0.05, 0.8, 0.2, 1)
+
+[sub_resource type="StandardMaterial3D" id="Material_wall"]
+albedo_color = Color(0.05, 0.5, 0.3, 1)
+emission_enabled = true
+emission = Color(0.03, 0.7, 0.4, 1)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_wall"]
+size = Vector3(2, 6, 12)
+
+[sub_resource type="CylinderMesh" id="CylinderMesh_pad"]
+top_radius = 3.0
+bottom_radius = 3.0
+height = 0.8
+
+[sub_resource type="StandardMaterial3D" id="Material_pad"]
+albedo_color = Color(0.4, 0.9, 0.4, 1)
+emission_enabled = true
+emission = Color(0.2, 0.9, 0.2, 1)
+
+[sub_resource type="StandardMaterial3D" id="Material_jet"]
+albedo_color = Color(0.2, 0.7, 1, 1)
+emission_enabled = true
+emission = Color(0.1, 0.5, 1, 1)
+
+[sub_resource type="StandardMaterial3D" id="Material_pool"]
+albedo_color = Color(0.1, 0.8, 0.4, 1)
+transparency = 1
+
+[sub_resource type="BoxMesh" id="BoxMesh_block"]
+size = Vector3(4, 2, 4)
+
+[node name="SlimeSanctuary" type="Node3D"]
+
+[node name="Sun" type="DirectionalLight3D" parent="."]
+transform = Transform3D(0.7071068, -0.35355338, 0.61237246, 0, 0.86602545, 0.5, -0.7071068, -0.35355344, 0.6123724, 0, 0, 0)
+light_energy = 1.3
+
+[node name="Floor" type="StaticBody3D" parent="."]
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Floor"]
+mesh = SubResource("PlaneMesh_floor")
+material_override = SubResource("Material_floor")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Floor"]
+shape = SubResource("BoxShape3D_floor")
+
+[node name="Player" parent="." instance=ExtResource("1_player")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -10, 2.5, -20)
+
+[node name="BouncePad" type="Area3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -10, 0.4, -5)
+script = ExtResource("2_bounce")
+launch_velocity = 18.0
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="BouncePad"]
+shape = SubResource("BoxShape3D_pad")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="BouncePad"]
+mesh = SubResource("CylinderMesh_pad")
+material_override = SubResource("Material_pad")
+
+[node name="JetForward" type="Area3D" parent="."]
+transform = Transform3D(0, 0, 1, 0, 1, 0, -1, 0, 0, 5, 1.0, -5)
+script = ExtResource("3_jet")
+launch_direction = Vector3(1, 0.35, 0)
+launch_strength = 20.0
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="JetForward"]
+shape = SubResource("BoxShape3D_jet")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="JetForward"]
+mesh = SubResource("BoxMesh_block")
+material_override = SubResource("Material_jet")
+
+[node name="JetUp" type="Area3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 12, 0.5, -2)
+script = ExtResource("3_jet")
+launch_direction = Vector3(0, 1, 0)
+launch_strength = 24.0
+
+[node name="CollisionShape3D2" type="CollisionShape3D" parent="JetUp"]
+shape = SubResource("BoxShape3D_jet")
+
+[node name="MeshInstance3D2" type="MeshInstance3D" parent="JetUp"]
+mesh = SubResource("BoxMesh_block")
+material_override = SubResource("Material_jet")
+
+[node name="GooPool" type="Area3D" parent="."]
+transform = Transform3D(10, 0, 0, 0, 1, 0, 0, 0, 10, -20, 0.05, 10)
+script = ExtResource("4_drag")
+horizontal_drag = 0.25
+upward_drift = 3.5
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="GooPool"]
+shape = SubResource("BoxShape3D_pool")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="GooPool"]
+mesh = SubResource("PlaneMesh_floor")
+material_override = SubResource("Material_pool")
+
+[node name="ExitTrigger" type="Area3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.5, 25)
+script = ExtResource("5_trigger")
+target_scene_path = "res://Level.tscn"
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="ExitTrigger"]
+shape = SubResource("BoxShape3D_exit")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="ExitTrigger"]
+mesh = SubResource("BoxMesh_block")
+material_override = SubResource("Material_pad")
+
+[node name="Vent" type="Area3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -25, 0, 5)
+script = ExtResource("6_vent")
+pull_strength = 22.0
+spin_force = 9.0
+range = 10.0
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Vent"]
+shape = SubResource("BoxShape3D_pad")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Vent"]
+mesh = SubResource("CylinderMesh_vent")
+material_override = SubResource("Material_vent")
+
+[node name="StickyWall" type="Area3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 25, 3, 0)
+script = ExtResource("7_stick")
+stick_drag = 0.25
+climb_boost = 7.0
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="StickyWall"]
+shape = SubResource("BoxShape3D_wall")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="StickyWall"]
+mesh = SubResource("BoxMesh_block")
+material_override = SubResource("Material_wall")
+
+[node name="HighBouncePad" type="Area3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -5, 0.4, 12)
+script = ExtResource("2_bounce")
+launch_velocity = 14.0
+bonus_per_down_speed = 0.8
+max_launch = 32.0
+
+[node name="CollisionShape3D3" type="CollisionShape3D" parent="HighBouncePad"]
+shape = SubResource("BoxShape3D_pad")
+
+[node name="MeshInstance3D3" type="MeshInstance3D" parent="HighBouncePad"]
+mesh = SubResource("CylinderMesh_pad")
+material_override = SubResource("Material_pad")
