@@ -151,6 +151,18 @@ shape = SubResource("BoxShape3D_exit")
 mesh = SubResource("BoxMesh_block")
 material_override = SubResource("Material_pad")
 
+[node name="ChaosTrigger" type="Area3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -30, 0.5, -25)
+script = ExtResource("5_trigger")
+target_scene_path = "res://PhysicsChaos.tscn"
+
+[node name="CollisionShape3D4" type="CollisionShape3D" parent="ChaosTrigger"]
+shape = SubResource("BoxShape3D_exit")
+
+[node name="MeshInstance3D4" type="MeshInstance3D" parent="ChaosTrigger"]
+mesh = SubResource("BoxMesh_block")
+material_override = SubResource("Material_jet")
+
 [node name="Vent" type="Area3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -25, 0, 5)
 script = ExtResource("6_vent")

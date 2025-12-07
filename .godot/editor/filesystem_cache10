@@ -1,4 +1,14 @@
 63f7b34db8d8cdea90c76aacccf841ec
-::res://::1765090713
+::res://::1765099171
 icon.svg::CompressedTexture2D::93858599198270904::1765017827::1765017840::1::::<><><>0<>0<>b78df95c47c4d69548b5df19387fd3ca<>res://.godot/imported/icon.svg-218a8f2b3041327d8a5756f3a245f83b.ctex::
+Level.tscn::PackedScene::296221678476074294::1765098678::0::1::::<><><>0<>0<><>::uid://cwbpvk0v82yyi::::res://PlayerChar.tscn<>uid://cood70af6j3mo::::res://level_advance_trigger.gd
+level_advance_trigger.gd::GDScript::5784627076611492078::1765097969::0::1::::<>Area3D<><>0<>0<><>::
+playerchar.gd::GDScript::3017188207263725147::1765097689::0::1::::<>Node3D<><>0<>0<><>::
+PlayerChar.tscn::PackedScene::6320009126593418720::1765097481::0::1::::<><><>0<>0<><>::uid://bi8swcguq2jc2::::res://playerchar.gd
 README.md::TextFile::-1::1765018068::0::1::::<><><>0<>0<><>::
+SlimeSanctuary.tscn::PackedScene::-1::1765098379::0::1::::<><><>0<>0<><>::res://PlayerChar.tscn<>res://slime_bounce_pad.gd<>res://slime_launch_jet.gd<>res://slime_drag_area.gd<>res://level_advance_trigger.gd<>res://slime_suction_vent.gd<>res://slime_wall_stick.gd
+slime_bounce_pad.gd::GDScript::4134365923697720001::1765098589::0::1::::<>Area3D<><>0<>0<><>::
+slime_drag_area.gd::GDScript::8114318491911684971::1765097994::0::1::::<>Area3D<><>0<>0<><>::
+slime_launch_jet.gd::GDScript::3738956719546079878::1765097983::0::1::::<>Area3D<><>0<>0<><>::
+slime_suction_vent.gd::GDScript::2681580457887770165::1765098341::0::1::::<>Area3D<><>0<>0<><>::
+slime_wall_stick.gd::GDScript::5938323718586744499::1765098350::0::1::::<>Area3D<><>0<>0<><>::

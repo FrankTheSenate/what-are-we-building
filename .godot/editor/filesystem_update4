@@ -1,4 +1,4 @@
 res://playerchar.gd
-res://PlayerChar.tscn
+res://slime_physics_spawner.gd
+res://slime_fling_body.gd
 res://Level.tscn
-res://slime_bounce_pad.gd

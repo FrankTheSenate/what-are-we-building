@@ -1,0 +1,170 @@
+[gd_scene load_steps=18 format=3]
+
+[ext_resource type="PackedScene" path="res://PlayerChar.tscn" id="1_player"]
+[ext_resource type="Script" path="res://slime_fling_body.gd" id="2_fling"]
+[ext_resource type="Script" path="res://level_advance_trigger.gd" id="3_trigger"]
+[ext_resource type="Script" path="res://slime_physics_spawner.gd" id="4_spawner"]
+
+[sub_resource type="StandardMaterial3D" id="Material_floor"]
+albedo_color = Color(0.05, 0.12, 0.05, 1)
+roughness = 0.9
+
+[sub_resource type="PlaneMesh" id="PlaneMesh_floor"]
+size = Vector2(90, 90)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_floor"]
+size = Vector3(90, 0.25, 90)
+
+[sub_resource type="StandardMaterial3D" id="Material_body_green"]
+albedo_color = Color(0.2, 0.9, 0.3, 1)
+emission_enabled = true
+emission = Color(0.1, 0.7, 0.2, 1)
+
+[sub_resource type="StandardMaterial3D" id="Material_body_blue"]
+albedo_color = Color(0.2, 0.5, 0.9, 1)
+emission_enabled = true
+emission = Color(0.05, 0.4, 0.8, 1)
+
+[sub_resource type="StandardMaterial3D" id="Material_body_orange"]
+albedo_color = Color(0.9, 0.6, 0.2, 1)
+emission_enabled = true
+emission = Color(0.8, 0.4, 0.1, 1)
+
+[sub_resource type="BoxMesh" id="BoxMesh_block"]
+size = Vector3(2.5, 2.5, 2.5)
+
+[sub_resource type="SphereMesh" id="SphereMesh_ball"]
+radius = 1.3
+height = 2.6
+
+[sub_resource type="CylinderMesh" id="CylinderMesh_cyl"]
+top_radius = 1.2
+bottom_radius = 1.2
+height = 2.8
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_block"]
+size = Vector3(2.5, 2.5, 2.5)
+
+[sub_resource type="SphereShape3D" id="SphereShape3D_ball"]
+radius = 1.3
+
+[sub_resource type="CylinderShape3D" id="CylinderShape3D_cyl"]
+radius = 1.2
+height = 2.8
+
+[sub_resource type="StandardMaterial3D" id="Material_trigger"]
+albedo_color = Color(0.1, 1, 0.3, 1)
+emission_enabled = true
+emission = Color(0.05, 0.8, 0.2, 1)
+
+[sub_resource type="BoxMesh" id="BoxMesh_trigger"]
+size = Vector3(3, 3, 3)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_trigger"]
+size = Vector3(3, 3, 3)
+
+[node name="PhysicsChaos" type="Node3D"]
+
+[node name="Sun" type="DirectionalLight3D" parent="."]
+transform = Transform3D(0.8660254, -0.3535534, 0.35355338, 0, 0.70710677, 0.7071068, -0.5, -0.6123724, 0.61237246, 0, 0, 0)
+light_energy = 1.45
+
+[node name="Floor" type="StaticBody3D" parent="."]
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Floor"]
+mesh = SubResource("PlaneMesh_floor")
+material_override = SubResource("Material_floor")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Floor"]
+shape = SubResource("BoxShape3D_floor")
+
+[node name="Player" parent="." instance=ExtResource("1_player")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2.5, 0)
+
+[node name="Spawner" type="Node3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0)
+script = ExtResource("4_spawner")
+spawn_interval = 0.65
+life_time = 3.5
+spawn_radius = 18.0
+spawn_height = 9.0
+base_impulse = Vector3(0, 10, 0)
+random_impulse = Vector3(22, 12, 22)
+random_torque = Vector3(6, 6, 6)
+
+[node name="TriggerReturn" type="Area3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.5, -35)
+script = ExtResource("3_trigger")
+target_scene_path = "res://Level.tscn"
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="TriggerReturn"]
+shape = SubResource("BoxShape3D_trigger")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="TriggerReturn"]
+mesh = SubResource("BoxMesh_trigger")
+material_override = SubResource("Material_trigger")
+
+[node name="FlingBoxA" type="RigidBody3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -15, 3, -10)
+script = ExtResource("2_fling")
+initial_impulse = Vector3(25, 8, 18)
+random_spread = 8.0
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="FlingBoxA"]
+shape = SubResource("BoxShape3D_block")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="FlingBoxA"]
+mesh = SubResource("BoxMesh_block")
+material_override = SubResource("Material_body_green")
+
+[node name="FlingBoxB" type="RigidBody3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 18, 4, -12)
+script = ExtResource("2_fling")
+initial_impulse = Vector3(-28, 6, 20)
+random_spread = 10.0
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="FlingBoxB"]
+shape = SubResource("BoxShape3D_block")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="FlingBoxB"]
+mesh = SubResource("BoxMesh_block")
+material_override = SubResource("Material_body_blue")
+
+[node name="FlingSphere" type="RigidBody3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -5, 6, 18)
+script = ExtResource("2_fling")
+initial_impulse = Vector3(22, 12, -24)
+random_spread = 6.0
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="FlingSphere"]
+shape = SubResource("SphereShape3D_ball")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="FlingSphere"]
+mesh = SubResource("SphereMesh_ball")
+material_override = SubResource("Material_body_orange")
+
+[node name="FlingCylinder" type="RigidBody3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 14, 5, 20)
+script = ExtResource("2_fling")
+initial_impulse = Vector3(-24, 10, -22)
+random_spread = 7.0
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="FlingCylinder"]
+shape = SubResource("CylinderShape3D_cyl")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="FlingCylinder"]
+mesh = SubResource("CylinderMesh_cyl")
+material_override = SubResource("Material_body_green")
+
+[node name="FlingBoxC" type="RigidBody3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -22, 7, 8)
+script = ExtResource("2_fling")
+initial_impulse = Vector3(30, 5, -18)
+random_spread = 9.0
+
+[node name="CollisionShape3D2" type="CollisionShape3D" parent="FlingBoxC"]
+shape = SubResource("BoxShape3D_block")
+
+[node name="MeshInstance3D2" type="MeshInstance3D" parent="FlingBoxC"]
+mesh = SubResource("BoxMesh_block")
+material_override = SubResource("Material_body_blue")
