@@ -1,0 +1,35 @@
+extends DirectionalLight3D
+
+@export var flash_interval: float = 10.0
+@export var flash_duration: float = 0.6
+@export var flash_value: float = 0.95
+@export var flash_saturation_min: float = 0.7
+@export var flash_saturation_max: float = 1.0
+
+var _base_color: Color
+var _rng := RandomNumberGenerator.new()
+
+
+func _ready() -> void:
+    _rng.randomize()
+    _base_color = light_color
+    _run_flash_loop()
+
+
+func _run_flash_loop() -> void:
+    # Kick off the async flashing loop without blocking the tree.
+    _flash_loop()
+
+
+async func _flash_loop() -> void:
+    while true:
+        await get_tree().create_timer(flash_interval).timeout
+        light_color = _random_flash_color()
+        await get_tree().create_timer(flash_duration).timeout
+        light_color = _base_color
+
+
+func _random_flash_color() -> Color:
+    var hue := _rng.randf()
+    var sat := lerp(flash_saturation_min, flash_saturation_max, _rng.randf())
+    return Color.from_hsv(hue, sat, flash_value)
