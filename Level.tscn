@@ -1,9 +1,10 @@
-[gd_scene load_steps=13 format=3 uid="uid://ehqy0kd4rq3g"]
+[gd_scene load_steps=14 format=3 uid="uid://ehqy0kd4rq3g"]
 
 [ext_resource type="PackedScene" uid="uid://cwbpvk0v82yyi" path="res://PlayerChar.tscn" id="1_bexhn"]
 [ext_resource type="Script" uid="uid://cood70af6j3mo" path="res://level_advance_trigger.gd" id="2_trigger"]
 [ext_resource type="Environment" path="res://raytraced_environment.tres" id="3_ray_env"]
 [ext_resource type="Script" uid="uid://dqb5rnmvsqubp" path="res://moving_light.gd" id="4_moving_light"]
+[ext_resource type="PackedScene" uid="uid://orb_follower_scene" path="res://OrbFollower.tscn" id="5_orb"]
 
 [sub_resource type="Image" id="Image_wkftn"]
 data = {
@@ -59,6 +60,9 @@ shape = SubResource("BoxShape3D_floor")
 
 [node name="Node3D" parent="." instance=ExtResource("1_bexhn")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 4.587867, 0)
+
+[node name="OrbBuddy" parent="." instance=ExtResource("5_orb")]
+target_path = NodePath("../Node3D")
 
 [node name="AdvanceTrigger" type="Area3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.75, 20)
