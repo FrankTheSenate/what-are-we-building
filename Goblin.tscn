@@ -1,0 +1,70 @@
+[gd_scene load_steps=6 format=3 uid="uid://goblin_placeholder_scene"]
+
+[sub_resource type="CapsuleMesh" id="CapsuleMesh_body"]
+radius = 0.35
+height = 0.9
+
+[sub_resource type="SphereMesh" id="SphereMesh_head"]
+radius = 0.4
+height = 0.8
+
+[sub_resource type="SphereMesh" id="SphereMesh_eye"]
+radius = 0.06
+height = 0.12
+
+[sub_resource type="SphereMesh" id="SphereMesh_pupil"]
+radius = 0.03
+height = 0.06
+
+[sub_resource type="StandardMaterial3D" id="Material_skin"]
+albedo_color = Color(0.34, 0.74, 0.36, 1)
+roughness = 0.6
+metallic = 0.0
+
+[sub_resource type="StandardMaterial3D" id="Material_eye"]
+albedo_color = Color(1, 1, 1, 1)
+emission_enabled = true
+emission = Color(0.95, 0.95, 1, 1)
+roughness = 0.2
+
+[sub_resource type="StandardMaterial3D" id="Material_pupil"]
+albedo_color = Color(0, 0, 0, 1)
+roughness = 0.1
+
+[node name="Goblin" type="Node3D"]
+
+[node name="Body" type="MeshInstance3D" parent="Goblin"]
+mesh = SubResource("CapsuleMesh_body")
+material_override = SubResource("Material_skin")
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.15, 0)
+
+[node name="Head" type="MeshInstance3D" parent="Goblin"]
+mesh = SubResource("SphereMesh_head")
+material_override = SubResource("Material_skin")
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.5, 0)
+
+[node name="EyeL" type="MeshInstance3D" parent="Head"]
+mesh = SubResource("SphereMesh_eye")
+material_override = SubResource("Material_eye")
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.14, 0.08, 0.32)
+
+[node name="EyeR" type="MeshInstance3D" parent="Head"]
+mesh = SubResource("SphereMesh_eye")
+material_override = SubResource("Material_eye")
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.14, 0.08, 0.32)
+
+[node name="PupilL" type="MeshInstance3D" parent="EyeL"]
+mesh = SubResource("SphereMesh_pupil")
+material_override = SubResource("Material_pupil")
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0.06)
+
+[node name="PupilR" type="MeshInstance3D" parent="EyeR"]
+mesh = SubResource("SphereMesh_pupil")
+material_override = SubResource("Material_pupil")
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0.06)
+
+[node name="Glow" type="OmniLight3D" parent="Goblin"]
+omni_range = 3.0
+light_color = Color(0.5, 0.9, 1, 1)
+light_energy = 0.4
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.8, 0)

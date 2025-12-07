@@ -1,4 +1,2 @@
-res://playerchar.gd
-res://slime_physics_spawner.gd
-res://slime_fling_body.gd
-res://Level.tscn
+res://sun_flash.gd
+res://orb_follower.gd

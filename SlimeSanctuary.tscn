@@ -1,4 +1,4 @@
-[gd_scene load_steps=22 format=3]
+[gd_scene load_steps=23 format=3]
 
 [ext_resource type="PackedScene" path="res://PlayerChar.tscn" id="1_player"]
 [ext_resource type="Script" path="res://slime_bounce_pad.gd" id="2_bounce"]
@@ -7,6 +7,7 @@
 [ext_resource type="Script" path="res://level_advance_trigger.gd" id="5_trigger"]
 [ext_resource type="Script" path="res://slime_suction_vent.gd" id="6_vent"]
 [ext_resource type="Script" path="res://slime_wall_stick.gd" id="7_stick"]
+[ext_resource type="PackedScene" uid="uid://orb_follower_scene" path="res://OrbFollower.tscn" id="8_orb"]
 
 [sub_resource type="StandardMaterial3D" id="Material_floor"]
 albedo_color = Color(0.08, 0.35, 0.08, 1)
@@ -87,6 +88,9 @@ shape = SubResource("BoxShape3D_floor")
 
 [node name="Player" parent="." instance=ExtResource("1_player")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -10, 2.5, -20)
+
+[node name="OrbBuddy" parent="." instance=ExtResource("8_orb")]
+target_path = NodePath("../Player")
 
 [node name="BouncePad" type="Area3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -10, 0.4, -5)
