@@ -1,5 +1,4 @@
-res://playerchar.gd
 res://moving_light.gd
 res://pit_object_rain.gd
-res://Level.tscn
+res://playerchar.gd
 res://raytraced_environment.tres
