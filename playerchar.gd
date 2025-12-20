@@ -62,6 +62,9 @@ var ragdoll_min_timer := 0.0
 var ragdoll_active := false
 var base_body_radius := 0.6
 var base_body_height := 1.6
+var invert_controls := false
+var auto_spin_rate := 0.0
+var base_stats: Dictionary = {}
 
 func _ready() -> void:
 	Input.set_mouse_mode(Input.MOUSE_MODE_CAPTURED)
@@ -83,6 +86,29 @@ func _ready() -> void:
 		var cap := body_collision.shape as CapsuleShape3D
 		base_body_radius = cap.radius
 		base_body_height = cap.height
+	base_stats = {
+		"speed": speed,
+		"jump_velocity": jump_velocity,
+		"gravity": gravity,
+		"mouse_sensitivity": mouse_sensitivity,
+		"acceleration": acceleration,
+		"deceleration": deceleration,
+		"bounce_frequency": bounce_frequency,
+		"bounce_damping": bounce_damping,
+		"trail_interval": trail_interval,
+		"trail_size": trail_size,
+		"trail_color": trail_color,
+		"ragdoll_speed_threshold": ragdoll_speed_threshold,
+		"ragdoll_duration": ragdoll_duration,
+		"vertical_squash_amount": vertical_squash_amount,
+		"impact_scale_factor": impact_scale_factor,
+		"impact_max_amplitude": impact_max_amplitude
+	}
+
+func get_base_stat(stat: String) -> Variant:
+	if base_stats.has(stat):
+		return base_stats[stat]
+	return get(stat)
 
 func _unhandled_input(event: InputEvent) -> void:
 	if event is InputEventMouseMotion:
@@ -115,6 +141,9 @@ func _physics_process(delta: float) -> void:
 			if not was_on_floor:
 				landed_velocity = 0.0
 
+		if auto_spin_rate != 0.0:
+			camera_yaw += auto_spin_rate * delta
+
 		var direction := Vector3.ZERO
 		var forward := -camera.global_transform.basis.z
 		forward.y = 0.0
@@ -131,6 +160,8 @@ func _physics_process(delta: float) -> void:
 			direction += right
 		if Input.is_action_pressed("Left"):
 			direction -= right
+		if invert_controls:
+			direction *= -1.0
 
 		var target_velocity := Vector3.ZERO
 		if ragdoll_timer <= 0.0 and direction != Vector3.ZERO:

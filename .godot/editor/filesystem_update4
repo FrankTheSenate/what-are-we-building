@@ -1,4 +1,1 @@
-res://sun_flash.gd
-res://orb_follower.gd
-res://goblin_interact.gd
-res://playerchar.gd
+res://powerup_spawner.gd

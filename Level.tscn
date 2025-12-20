@@ -1,4 +1,4 @@
-[gd_scene load_steps=15 format=3 uid="uid://ehqy0kd4rq3g"]
+[gd_scene load_steps=16 format=3 uid="uid://ehqy0kd4rq3g"]
 
 [ext_resource type="PackedScene" uid="uid://cwbpvk0v82yyi" path="res://PlayerChar.tscn" id="1_bexhn"]
 [ext_resource type="Script" uid="uid://cood70af6j3mo" path="res://level_advance_trigger.gd" id="2_trigger"]
@@ -6,6 +6,7 @@
 [ext_resource type="Script" uid="uid://dqb5rnmvsqubp" path="res://moving_light.gd" id="4_moving_light"]
 [ext_resource type="PackedScene" uid="uid://orb_follower_scene" path="res://OrbFollower.tscn" id="5_orb"]
 [ext_resource type="PackedScene" uid="uid://goblin_placeholder_scene" path="res://Goblin.tscn" id="6_goblin"]
+[ext_resource type="Script" path="res://powerup_spawner.gd" id="7_powerups"]
 
 [sub_resource type="Image" id="Image_wkftn"]
 data = {
@@ -68,6 +69,14 @@ target_path = NodePath("../Node3D")
 [node name="Goblin" parent="." instance=ExtResource("6_goblin")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 4, 0.45, 4)
 target_path = NodePath("../Node3D")
+
+[node name="PowerupSpawner" type="Node3D" parent="."]
+script = ExtResource("7_powerups")
+player_path = NodePath("../Node3D")
+spawn_interval = 8.0
+spawn_radius = 20.0
+min_spawn_radius = 6.0
+max_powerups = 5
 
 [node name="AdvanceTrigger" type="Area3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.75, 20)
