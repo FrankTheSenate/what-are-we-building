@@ -15,6 +15,9 @@ run/main_scene="res://Level.tscn"
 config/features=PackedStringArray("4.5", "Forward Plus")
 config/icon="res://icon.svg"
 
+[autoload]
+Registry="*res://global_registry.gd"
+
 [input]
 
 Forward={

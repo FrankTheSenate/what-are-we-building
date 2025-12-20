@@ -18,7 +18,16 @@ var _effect_id := 1
 
 @onready var _player: Node = get_node_or_null(player_path)
 
+func set_player(player: Node) -> void:
+	_player = player
+
 func _ready() -> void:
+	if _player == null:
+		var reg := get_node_or_null("/root/Registry")
+		if reg and reg.has_method("get_node_ref"):
+			var reg_player: Node = reg.get_node_ref("player")
+			if reg_player:
+				_player = reg_player
 	_rng.randomize()
 	_definitions = _build_definitions()
 

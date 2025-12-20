@@ -1,1 +1,3 @@
 res://powerup_spawner.gd
+res://level_bootstrap.gd
+res://global_registry.gd
