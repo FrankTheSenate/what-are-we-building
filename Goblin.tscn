@@ -1,6 +1,6 @@
-[gd_scene load_steps=7 format=3 uid="uid://goblin_placeholder_scene"]
+[gd_scene load_steps=9 format=3 uid="uid://goblin_placeholder_scene"]
 
-[ext_resource type="Script" path="res://goblin_interact.gd" id="1_goblin_script"]
+[ext_resource type="Script" uid="uid://caa0ob5vuhoar" path="res://goblin_interact.gd" id="1_goblin_script"]
 
 [sub_resource type="CapsuleMesh" id="CapsuleMesh_body"]
 radius = 0.35
@@ -93,3 +93,9 @@ outline_size = 3
 modulate = Color(0.9, 1, 0.9, 1)
 outline_modulate = Color(0.05, 0.15, 0.05, 1)
 no_depth_test = true
+
+[node name="Grunt" type="AudioStreamPlayer3D" parent="."]
+max_distance = 15.0
+unit_size = 1.0
+attenuation_filter_cutoff_hz = 20500.0
+bus = &"SFX"

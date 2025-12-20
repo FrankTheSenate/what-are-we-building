@@ -2,7 +2,7 @@ extends Node3D
 
 @export var target_path: NodePath
 @export var desired_distance: float = 7.5
-@export var min_distance: float = 2.0
+@export var min_distance: float = 7.5
 @export var move_speed: float = 1.75
 @export var height_offset: float = 1.5
 @export var name_label_path: NodePath = "NameLabel"
@@ -20,6 +20,8 @@ extends Node3D
 ]
 @export var scream_volume_db: float = 8.0
 @export var sob_volume_db: float = -1.0
+@export var reaction_distance: float = 2.0
+@export var reaction_cooldown: float = 2.0
 
 @onready var target: Node3D = get_node_or_null(target_path)
 @onready var target_body: Node3D = target.get_node_or_null("CharacterBody3D") if target else null
@@ -29,6 +31,7 @@ extends Node3D
 
 var _reacting: bool = false
 var _rng := RandomNumberGenerator.new()
+var _last_reaction_time: float = -1000.0
 
 
 func _ready() -> void:
@@ -70,8 +73,11 @@ func _physics_process(delta: float) -> void:
 
 	global_transform.origin += move_vec
 
-	if not _reacting and dist <= min_distance:
+	var now := Time.get_ticks_msec() / 1000.0
+	var can_react := (now - _last_reaction_time) >= reaction_cooldown
+	if not _reacting and can_react and dist <= reaction_distance:
 		_reacting = true
+		_last_reaction_time = now
 		_play_reaction()
 
 

@@ -1,6 +1,6 @@
 [gd_scene load_steps=4 format=3 uid="uid://orb_follower_scene"]
 
-[ext_resource type="Script" uid="uid://orb_follower_script" path="res://orb_follower.gd" id="1_orb_script"]
+[ext_resource type="Script" uid="uid://dkvz9g4b6wu6d" path="res://orb_follower.gd" id="1_orb_script"]
 
 [sub_resource type="StandardMaterial3D" id="Material_orb"]
 albedo_color = Color(0.58, 0.86, 1, 1)
@@ -17,7 +17,8 @@ height = 0.7
 [node name="OrbFollower" type="Node3D"]
 script = ExtResource("1_orb_script")
 desired_distance = 7.5
-min_distance = 2.0
+min_distance = 7.5
+reaction_distance = 2.0
 height_offset = 1.2
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="."]
